@@ -1,0 +1,32 @@
+for filename in os.listdir('.'):
+    if 'TRITC' in filename:
+        start = re.search('_t',filename).end()
+        end = re.search('.TIF',filename).start()
+        t = int(filename[start:end])
+        if (t-1)%4==0:
+            for i in [1,2,3]:
+            filename_new = filename.replace('_t%i.TIF'%(t),'_t%i.TIF'%(t+i))
+            shutil.copy(filename,filename_new)
+
+
+for filename in os.listdir('.'):
+      if 'Trans' in filename:
+        print 'ok'
+        start = re.search('_t',filename).end()
+        end = re.search('.TIF',filename).start()
+        t = int(filename[start:end])
+        print t
+        if t==1:
+            for i in range(1,66,1):
+                filename_new = filename.replace('_t%i.TIF'%(t),'_t%i.TIF'%(t+i))
+                copy(filename,filename_new)
+
+for filename in os.listdir('.'):
+            if 'TRITC' in filename:
+                        start = re.search('_t',filename).end()
+                        end = re.search('.TIF',filename).start()
+                        t = int(filename[start:end])
+                        if (t-1)%4==0:
+                                    for i in [1,2,3]:
+                                            filename_new = filename.replace('_t%i.TIF'%(t),'_t%i.TIF'%(t+i))
+                                            shutil.copy(filename,filename_new)
