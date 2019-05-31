@@ -1,0 +1,10 @@
+dir = getInfo("image.directory");
+filename = getInfo("image.filename");
+roiManager("Add");
+newImage("Untitled", "8-bit black", 1024, 1024, 1);
+roiManager("Select", roiManager("count")-1);
+setForegroundColor(255, 255, 255);
+run("Draw", "slice");
+run("Select None");
+run("Save", "save="+dir+replace(filename,"crop_BF","seg"));
+run("Close All");
