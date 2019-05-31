@@ -15,7 +15,7 @@ toggle = 1;
 for (i = 0; i < lengthOf(dir_list); i++) {
 
 	imagename = dir_list[i];
-	if (matches(imagename,".*.TIF")) {
+	if (matches(imagename,"Trans.*tif")) {
 
 		print(imagename);
 		open(data_dir + imagename);

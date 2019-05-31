@@ -38,29 +38,28 @@ function combine_images(data_dir,save_dir,keyword,keyword_C1,keyword_C2,keyword_
 		
 			//opens images for each channel
 			open_enhance(data_dir+basename_list[i]+keyword_C1+extension,"C1",0.01);
-			getDimensions(width, height, channels, slices, frames);
 			open_enhance(data_dir+basename_list[i]+keyword_C2+extension,"C2",0.01);
+			getDimensions(width, height, channels, slices, frames);
 			open_enhance(data_dir+basename_list[i]+keyword_C3+extension,"C3",0.01);
 			open_enhance(data_dir+basename_list[i]+keyword_C4+extension,"C4",0.01);
 			open_enhance(data_dir+basename_list[i]+keyword_C5+extension,"C5",0.01);
 		
-			/*
+			
 			//makes hyperstack
 			print("Making combined hyperstack");
-			run("Concatenate...", "  title=concat keep image1=C1 image2=C2 image3=C3 image4=C4 image5=[-- None --]");
+			run("Concatenate...", "  title=concat keep image1=C2 image2=C3 image3=C4 image4=C5 image5=[-- None --]");
 			run("Stack to Hyperstack...", "order=xyzct channels=4 slices=" + slices + " frames=1 display=Grayscale");
-			saveAs("tiff", data_dir + basename + "_" + i + "_comb.tif");
-			*/
-		
+			saveAs("tiff", data_dir + basename + "_comb.tif");
+			
 			//merges channels
-			//C1 (red);
-			//C2 (green);
-			//C3 (blue);
-			//C4 (gray);
-			//C5 (cyan);
-			//C6 (magenta);
-			//C7 (yellow);
-			run("Merge Channels...", "c2=C4 c3=C3 c6=C5 create keep");
+			//c1 (red);
+			//c2 (green);
+			//c3 (blue);
+			//c4 (gray);
+			//c5 (cyan);
+			//c6 (magenta);
+			//c7 (yellow);
+			run("Merge Channels...", "c2=C3 c3=C2 c6=C5 create keep");
 			rename("merge");
 			run("RGB Color", "slices");
 
@@ -82,14 +81,15 @@ function combine_images(data_dir,save_dir,keyword,keyword_C1,keyword_C2,keyword_
 			run("Scale Bar...", "width=" + sb_size + " height=12 font=28 color=White background=None location=[At Selection] bold hide label");
 	
 			run("Reverse"); //because these stacks go the opposite way
+
 		
 			//makes avi of stack
-			run("AVI... ", "compression=JPEG frame=8 save=[" + save_dir + basename + "_mont_w" + sb_size +"umSB_C3C4C5.avi" + "]");
+			run("AVI... ", "compression=JPEG frame=8 save=[" + save_dir + basename + "_mont_w" + sb_size +"umSB_C2C3C5.avi" + "]");
 		
 			//makes bpp
 			print("Making BPP");
 			run("Z Project...", "projection=[Max Intensity]");
-			saveAs("tiff", save_dir + basename + "_bpp_w" + sb_size +"umSB_merge_C3C4C5.tif");
+			saveAs("tiff", save_dir + basename + "_bpp_w" + sb_size +"umSB_merge_C2C3C5.tif");
 	
 			//closes
 			run("Close All");
@@ -114,7 +114,8 @@ function main(){
 	
 
 	data_dir = getDirectory("Choose Data Directory");
-	save_dir = getDirectory("Choose Save Directory");
+	//save_dir = getDirectory("Choose Save Directory");
+	save_dir = data_dir + "avi/";
 	File.makeDirectory(save_dir);
 
 	combine_images(data_dir,save_dir,keyword,keyword_C1,keyword_C2,keyword_C3,keyword_C4,keyword_C5,px_size,sb_size);
