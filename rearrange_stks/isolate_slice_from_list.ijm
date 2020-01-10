@@ -16,7 +16,7 @@ slicelist = split(infile,"\n");
 for (i = 0; i < slicelist.length; i++) {
 
 	//get image name and slice number
-	line = split(slicelist[i]," ");
+	line = split(slicelist[i],",");
 	imagename = line[0];
 	slicenumber = line[1];
 	print(imagename);
@@ -32,8 +32,8 @@ for (i = 0; i < slicelist.length; i++) {
 	run("Reduce Dimensionality...", "frames");
 	
 	//adjust contrast and bleach correct
-	run("Enhance Contrast...", "saturated=0.1");
-	run("Bleach Correction", "correction=[Simple Ratio] background=0");
+	//run("Enhance Contrast...", "saturated=0.1");
+	//run("Bleach Correction", "correction=[Simple Ratio] background=0");
 	//run("Apply LUT", "slice");
 	//resetMinAndMax();
 	//run("8-bit");

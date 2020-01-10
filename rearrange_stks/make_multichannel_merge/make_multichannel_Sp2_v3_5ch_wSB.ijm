@@ -51,6 +51,7 @@ function combine_images(data_dir,save_dir,keyword,keyword_C1,keyword_C2,keyword_
 			run("Stack to Hyperstack...", "order=xyzct channels=4 slices=" + slices + " frames=1 display=Grayscale");
 			saveAs("tiff", data_dir + basename + "_comb.tif");
 			
+			
 			//merges channels
 			//c1 (red);
 			//c2 (green);
@@ -59,18 +60,18 @@ function combine_images(data_dir,save_dir,keyword,keyword_C1,keyword_C2,keyword_
 			//c5 (cyan);
 			//c6 (magenta);
 			//c7 (yellow);
-			run("Merge Channels...", "c2=C3 c3=C2 c6=C5 create keep");
+			run("Merge Channels...", "c2=C5 c3=C2 c6=C4 create keep");
 			rename("merge");
 			run("RGB Color", "slices");
 
 			//combines stacks
 			print("Combining Stacks");
-			run("Combine...", "stack1=C2 stack2=C3");
+			run("Combine...", "stack1=C2 stack2=C5");
 			run("Combine...", "stack1=[Combined Stacks] stack2=C4");
-			run("Combine...", "stack1=[Combined Stacks] stack2=C5");
-			//selectWindow("Combined Stacks");
-			//run("RGB Color", "slices");
 			//run("Combine...", "stack1=[Combined Stacks] stack2=merge");
+			selectWindow("Combined Stacks");
+			run("RGB Color", "slices");
+			run("Combine...", "stack1=[Combined Stacks] stack2=merge");
 			//run("Combine...", "stack1=[Combined Stacks] stack2=C4");
 	
 			//adds scale bar
@@ -100,7 +101,7 @@ function combine_images(data_dir,save_dir,keyword,keyword_C1,keyword_C2,keyword_
 
 function main(){
 
-	keyword = "";
+	keyword = "NaK";
 	keyword_C1 = "_w11-Trans -bypath-";
 	keyword_C2 = "_w22    spinning  DAPI";
 	keyword_C3 = "_w32    spinning  GFP";
@@ -108,9 +109,10 @@ function main(){
 	keyword_C5 = "_w52    spinning  Cy5";
 	extension = ".TIF";
 
-	px_size = 6.5/60;
-	//px_size = 0.2750;
-	sb_size = 20;
+	//px_size = 6.5/60;
+	px_size = 0.275;
+	//px_size = 0.183333;
+	sb_size = 50;
 	
 
 	data_dir = getDirectory("Choose Data Directory");

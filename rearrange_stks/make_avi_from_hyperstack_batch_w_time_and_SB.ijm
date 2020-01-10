@@ -12,8 +12,8 @@ save_dir = data_dir + "avi/"
 File.makeDirectory(save_dir);
 
 //set some parameters
-px_size = 0.3225*2; //in microns (binning=2)
-time_int = 15; //in minutes
+px_size = 0.275; //in microns (binning=2)
+time_int = 20; //in minutes
 sb_size = 50; //in microns
 
 //open file and generate slice list

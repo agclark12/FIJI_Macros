@@ -4,7 +4,7 @@
 
 setBatchMode(true);
 
-ch_keyword = "TRITC_s9_t";
+ch_keyword = "org_mTmG_L-WRN_vs_ENR_1_s8_t";
 //no_timepoints = 118;
 //img_extension = "STK";
 
@@ -43,6 +43,7 @@ for (i=min; i<max+1; i++) {
 	if (i==num_list[i-1]) {
 		print('ok');
 	} else {
+		print('missing frame ' + i);
 		stop
 	}
 	//toggle = 'on';

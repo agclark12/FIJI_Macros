@@ -8,11 +8,11 @@ data_dir = getDirectory("Choose Directory");
 
 //makes a dialog to set image parameters
 Dialog.create("Set Image Stack Parameters");
-Dialog.addString("Image Keyword", "spinning  mCherry");
-Dialog.addNumber("Number of Positions:", 5);
+Dialog.addString("Image Keyword", "org_2D_mGmT_5kPa_PAA_Blebb_1");
+Dialog.addNumber("Number of Positions:", 6);
 Dialog.addNumber("Start Position:", 1);
-Dialog.addNumber("Number of Time Frames:", 16);
-Dialog.addNumber("Number of Z-Slices:", 31);
+Dialog.addNumber("Number of Time Frames:", 100);
+Dialog.addNumber("Number of Z-Slices:", 1);
 Dialog.show();
 keyword = Dialog.getString();
 no_positions = Dialog.getNumber();
