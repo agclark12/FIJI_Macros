@@ -5,6 +5,7 @@ setBatchMode(true);
 
 data_dir = getDirectory("Choose Data Directory");
 dir_list = getFileList(data_dir);
+keyword = "mCherry";
 
 save_dir = data_dir + "bpp/";
 File.makeDirectory(save_dir);

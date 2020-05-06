@@ -8,11 +8,11 @@ data_dir = getDirectory("Choose Directory");
 
 //makes a dialog to set image parameters
 Dialog.create("Set Image Stack Parameters");
-Dialog.addString("Image Keyword", "org_2D_mGmT_5kPa_PAA_Blebb_1");
-Dialog.addNumber("Number of Positions:", 6);
+Dialog.addString("Image Keyword", "Trans");
+Dialog.addNumber("Number of Positions:", 10);
 Dialog.addNumber("Start Position:", 1);
-Dialog.addNumber("Number of Time Frames:", 100);
-Dialog.addNumber("Number of Z-Slices:", 1);
+Dialog.addNumber("Number of Time Frames:", 16);
+Dialog.addNumber("Number of Z-Slices:",1);
 Dialog.show();
 keyword = Dialog.getString();
 no_positions = Dialog.getNumber();
@@ -35,11 +35,12 @@ for (i=start_position; i<start_position+no_positions; i++) {
 	
 	run("Image Sequence...", "open=" + data_dir + " number=" + no_frames + " starting=1 increment=1 scale=100 file=[(.*" + keyword + ".*_s" + i + "_t.*TIF)] sort");
 	run("Stack to Hyperstack...", "order=xyczt(default) channels=1 slices=" + no_slices + " frames=" + no_frames + " display=Grayscale");
-	run("8-bit");
+	//run("8-bit");
 	outPath = save_dir + "/" + keyword + "_s" + i + ".tif";
 	print(outPath);
 	saveAs("tiff", outPath);
 	close();
+	run("Collect Garbage");
 }
 
 setBatchMode(false);

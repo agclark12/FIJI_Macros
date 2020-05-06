@@ -4,14 +4,17 @@
 setBatchMode(true);
 
 data_dir = getDirectory("Choose Directory");
+save_dir = data_dir + "comb/"
+File.makeDirectory(save_dir);
+
 no_channels = getNumber("Choose the number of channels (2 or 3)",2);
 
 if (no_channels==2) {
 	//makes a dialog to set image parameters (2 channels)
 	Dialog.create("Set Combined Image Stack Parameters");
-	Dialog.addNumber("Number of Positions:", 6);
-	Dialog.addString("Channel 1 Keyword:","561");
-	Dialog.addString("Channel 2 Keyword:","488");
+	Dialog.addNumber("Number of Positions:", 10);
+	Dialog.addString("Channel 1 Keyword:","Trans");
+	Dialog.addString("Channel 2 Keyword:","mCherry_bpp");
 	Dialog.show();
 	no_positions = Dialog.getNumber();
 	ch1_keyword = Dialog.getString();
@@ -43,17 +46,17 @@ for (i=1; i<no_positions+1; i++) {
 
 		filename = dir_list[j];
 		
-		//if (matches(filename, ".*" + ch1_keyword + ".*" + "s" + i + ".*tif")) {
+		if (matches(filename, ".*" + ch1_keyword + ".*" + "s" + i + ".*tif")) {
 		//if (matches(filename, ".*" + ch1_keyword + ".*" + ".tif")) {
-		if (matches(filename, "20190125_" + i+ ".*" + ch1_keyword + ".*TIF")) {
+		//if (matches(filename, "20190125_" + i+ ".*" + ch1_keyword + ".*TIF")) {
 			//print(filename);
 			open(data_dir + "/" + filename);
 			rename("ch1");
 			Stack.getDimensions(w, h, ch, no_slices, no_frames);
 		}
-		//if (matches(filename, ".*" + ch2_keyword + ".*" + "s" + i + ".*tif")) {
+		if (matches(filename, ".*" + ch2_keyword + ".*" + "s" + i + ".*tif")) {
 		//if (matches(filename, ".*" + ch2_keyword + ".*" + ".tif")) {
-		if (matches(filename, "20190125_" + i+ ".*" + ch2_keyword + ".*TIF")) {
+		//if (matches(filename, "20190125_" + i+ ".*" + ch2_keyword + ".*TIF")) {
 			//print(filename);
 			open(data_dir + "/" + filename);
 			rename("ch2");
@@ -68,11 +71,11 @@ for (i=1; i<no_positions+1; i++) {
 	if (no_channels==2) {
 		run("Concatenate...", "  title=[Concatenated Stacks] image1=ch1 image2=ch2 image3=[-- None --]");
 		run("Stack to Hyperstack...", "order=xyztc channels=2 slices=" + no_slices + " frames=" + no_frames + " display=Grayscale");
-		saveAs("tiff", data_dir + "/" + ch1_keyword + "_" + ch2_keyword + "_comb_s" + i + ".tif");				
+		saveAs("tiff", save_dir + "/" + ch1_keyword + "_" + ch2_keyword + "_comb_s" + i + ".tif");				
 	} else if (no_channels==3) {
 		run("Concatenate...", "  title=[Concatenated Stacks] image1=ch1 image2=ch2 image3=ch3 image4=[-- None --]");
 		//run("Stack to Hyperstack...", "order=xyztc channels=3 slices=" + no_slices + " frames=" + no_frames + " display=Grayscale");
-		saveAs("tiff", data_dir + "/" + ch1_keyword + "_" + ch2_keyword + "_" + ch3_keyword + "_comb_s" + i + ".tif");		
+		saveAs("tiff", save_dir + "/" + ch1_keyword + "_" + ch2_keyword + "_" + ch3_keyword + "_comb_s" + i + ".tif");		
 	}
 	run("Close All");
 }
