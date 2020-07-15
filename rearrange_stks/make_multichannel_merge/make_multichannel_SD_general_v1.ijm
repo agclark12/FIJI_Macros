@@ -3,7 +3,7 @@
 
 setBatchMode(true);
 
-basename = "A431_clust_MonoColl_A2_DAPI_ZEB-1-Ax488_Rac1-Ax568_Phall-Ax633";
+basename = "A431_cluster_collnet_PMRLC2-488_Rac1-568_phall-633_DAPI_Ab";
 keyword_C1 = "w2405-QUAD-DAPI"
 keyword_C2 = "w3491-QUAD-GFP"
 keyword_C3 = "w4561-QUAD-DsRed"
@@ -58,11 +58,13 @@ for (i=start_position; i<start_position+no_positions; i++) {
 	run("8-bit");
 	*/
 
+	/*
 	//makes hyperstack
 	print("Making combined hyperstack");
 	run("Concatenate...", "  title=concat keep image1=C1 image2=C2 image3=C3 image4=C4 image5=[-- None --]");
 	run("Stack to Hyperstack...", "order=xyzct channels=4 slices=" + slices + " frames=1 display=Grayscale");
 	saveAs("tiff", data_dir + basename + "_" + i + "_comb.tif");
+	*/
 
 	//merges channels
 	//C1 (red);
@@ -72,7 +74,7 @@ for (i=start_position; i<start_position+no_positions; i++) {
 	//C5 (cyan);
 	//C6 (magenta);
 	//C7 (yellow);
-	run("Merge Channels...", "c2=C2 c3=C4 c6=C3 create keep");
+	run("Merge Channels...", "c2=C3 c3=C1 c6=C4 create keep");
 	rename("merge");
 	run("RGB Color", "slices");
 
@@ -86,11 +88,15 @@ for (i=start_position; i<start_position+no_positions; i++) {
 
 	//combines stacks
 	print("Combining Stacks");
-	run("Combine...", "stack1=C1 stack2=C2");
-	run("Combine...", "stack1=[Combined Stacks] stack2=C3");
+//	run("Combine...", "stack1=C1 stack2=C2");
+//	run("Combine...", "stack1=[Combined Stacks] stack2=C3");
+//	run("Combine...", "stack1=[Combined Stacks] stack2=C4");
+	run("Combine...", "stack1=C1 stack2=C3");
 	run("Combine...", "stack1=[Combined Stacks] stack2=C4");
 	run("RGB Color", "slices");
 	run("Combine...", "stack1=[Combined Stacks] stack2=merge");
+
+	saveAs("tiff", save_dir + basename + "_" + i + ".tif");
 
 	//makes avi of stack
 	run("AVI... ", "compression=JPEG frame=8 save=[" + save_dir + basename + "_" + i + "_mont.avi" + "]");
