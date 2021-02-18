@@ -4,10 +4,11 @@
 
 setBatchMode(true);
 run("Close All");
-
 //select directory
 data_dir = getDirectory("Image directory containing files");
 dir_list = getFileList(data_dir);
+//key = "Trans.*tif"
+key = "A431.*tif"
 
 toggle = 1;
 
@@ -15,7 +16,7 @@ toggle = 1;
 for (i = 0; i < lengthOf(dir_list); i++) {
 
 	imagename = dir_list[i];
-	if (matches(imagename,"Trans.*tif")) {
+	if (matches(imagename,key)) {
 
 		print(imagename);
 		open(data_dir + imagename);

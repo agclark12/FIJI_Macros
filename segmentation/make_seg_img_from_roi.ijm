@@ -7,5 +7,5 @@ roiManager("Select", roiManager("count")-1);
 setForegroundColor(255, 255, 255);
 run("Draw", "slice");
 run("Select None");
-run("Save", "save="+dir+replace(filename,"Trans_reg_crop","seg"));
+run("Save", "save="+dir+replace(filename,".png","_seg.tif"));
 run("Close All");

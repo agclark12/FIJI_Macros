@@ -31,10 +31,10 @@ File.makeDirectory(save_dir);
 
 //makes a dialog to set image parameters
 Dialog.create("Set Image Stack Parameters");
-Dialog.addString("Image Keyword", "A431_clust_collNet_LoX_Glut_1");
+Dialog.addString("Image Keyword", "A431_clust_PAA_2-100kPa_mono_coll_1");
 Dialog.addNumber("Start Position:", 1);
-Dialog.addNumber("End Position:", 40);
-Dialog.addNumber("Number of Time Frames:", 69);
+Dialog.addNumber("End Position:", 80);
+Dialog.addNumber("Number of Time Frames:", 66);
 Dialog.addNumber("Number of Z-Slices:", 1);
 Dialog.show();
 keyword = Dialog.getString();
@@ -53,7 +53,7 @@ for (i=start_position; i<end_position+1; i++) {
 	Stack.getDimensions(width, height, channels, slices, frames);
 	
 	//set levels and convert to 8-bit
-	print("converting to 8-bit");
+	print("converting to 8-bit and reducing size");
 	for (j=1; j<channels+1; j++) {
 		Stack.setChannel(j);
 		idx = find_brightest_slice_hstk();
