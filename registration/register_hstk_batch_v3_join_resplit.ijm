@@ -11,9 +11,9 @@ dir_list = getFileList(data_dir);
 save_dir = data_dir + "reg/";
 File.makeDirectory(save_dir);
 
-ch1_keyword = "mCherry_bpp"; //ch1 is the one used for registration
+ch1_keyword = "mCherry"; //ch1 is the one used for registration
 ch2_keyword = "Trans";
-start_position = 9;
+start_position = 1;
 end_position = 10;
 
 for (i=start_position; i<end_position+1; i++) {
@@ -41,7 +41,8 @@ for (i=start_position; i<end_position+1; i++) {
 
 	//correct drift (registration)
 	print("correcting drift");
-	run("Correct 3D drift", "channel=1");
+	//run("Correct 3D drift", "channel=1");
+	run("Correct 3D drift", "channel=1 only=0 lowest=1 highest=1 max_shift_x=500 max_shift_y=500 max_shift_z=10");
 
 	//split the channels up again
 	selectWindow("registered time points");

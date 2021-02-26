@@ -31,11 +31,11 @@ File.makeDirectory(save_dir);
 
 //makes a dialog to set image parameters
 Dialog.create("Set Image Stack Parameters");
-Dialog.addString("Image Keyword", "A431_clust_collNet_LoX_Glut_1");
+Dialog.addString("Image Keyword", "mCherry");
 Dialog.addNumber("Start Position:", 1);
-Dialog.addNumber("End Position:", 40);
-Dialog.addNumber("Number of Time Frames:", 69);
-Dialog.addNumber("Number of Z-Slices:", 1);
+Dialog.addNumber("End Position:", 10);
+Dialog.addNumber("Number of Time Frames:", 17);
+Dialog.addNumber("Number of Z-Slices:", 34);
 Dialog.show();
 keyword = Dialog.getString();
 start_position = Dialog.getNumber();

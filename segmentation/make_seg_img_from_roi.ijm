@@ -1,3 +1,6 @@
+prefix = "Trans_reg_crop_";
+new_prefix = "seg_";
+
 dir = getInfo("image.directory");
 filename = getInfo("image.filename");
 roiManager("Add");
@@ -7,5 +10,9 @@ roiManager("Select", roiManager("count")-1);
 setForegroundColor(255, 255, 255);
 run("Draw", "slice");
 run("Select None");
-run("Save", "save="+dir+replace(filename,".png","_seg.tif"));
-run("Close All");
+if (startsWith(filename, prefix)) {
+	run("Save", "save="+dir+replace(filename, prefix, new_prefix));
+	run("Close All");
+} else {
+	exit("Your filename does not have the specified prefix. Exiting to prevent overwriting original file.");
+}
