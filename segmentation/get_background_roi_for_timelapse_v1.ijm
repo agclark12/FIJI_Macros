@@ -32,7 +32,7 @@ run("Close All");
 setBatchMode(false);
 
 key1 = "seg";
-key2 = "mCherry_bpp_reg_crop";
+key2 = "mCherry_reg_crop";
 start_pos = 1;
 end_pos = 10;
 data_dir = getDirectory("Choose a data directory");

@@ -26,11 +26,11 @@ data_dir = getDirectory("Choose Directory");
 
 //makes a dialog to set image parameters
 Dialog.create("Set Image Stack Parameters");
-Dialog.addString("Image Keyword", "mCherry");
-Dialog.addNumber("Number of Positions:", 8);
-Dialog.addNumber("Start Position:", 3);
-Dialog.addNumber("Number of Time Frames:", 46);
-Dialog.addNumber("Number of Z-Slices:", 49);
+Dialog.addString("Image Keyword", "Trans");
+Dialog.addNumber("Number of Positions:", 18);
+Dialog.addNumber("Start Position:", 1);
+Dialog.addNumber("Number of Time Frames:", 29);
+Dialog.addNumber("Number of Z-Slices:", 23);
 Dialog.show();
 keyword = Dialog.getString();
 no_positions = Dialog.getNumber();
@@ -72,25 +72,40 @@ for (i=start_position; i<start_position+no_positions; i++) {
 		}
 	}
 
-	//converts to a hyperstack with the proper dimensions and makes projection if necessary
-	run("Stack to Hyperstack...", "order=xyczt(default) channels=1 slices=" + no_slices + " frames=" + no_frames + " display=Grayscale");
-	run("Z Project...", "projection=[Max Intensity] all");
+	//does the rest only if hstk exists (this accounts for missing positions)
+	if (isOpen("hstk")) {
 
-	//set levels and convert to 8-bit
-	print("converting to 8-bit");
-	Stack.getDimensions(width, height, channels, slices, frames);
-	for (j=1; j<channels+1; j++) {
-		Stack.setChannel(j);
-		idx = find_brightest_slice_hstk();
-		Stack.setSlice(idx);
-		resetMinAndMax();
-	}
-	run("8-bit");
+		//converts to a hyperstack with the proper dimensions
+		run("Stack to Hyperstack...", "order=xyczt(default) channels=1 slices=" + no_slices + " frames=" + no_frames + " display=Grayscale");
+		
+		//makes projection if necessary (comment out if unnecessary)
+		//run("Z Project...", "projection=[Max Intensity] all");
+
+		//reduces to a single z-slice if there are multiple slices if neccesary (comment out if unnecessary)
+//		Stack.getDimensions(width, height, channels, slices, frames);
+//		mid_plane = Math.ceil(slices/2);
+//		run("Reduce Dimensionality...", "frames");
+		
+		//set levels and convert to 8-bit
+		print("converting to 8-bit");
+		Stack.getDimensions(width, height, channels, slices, frames);
+		for (j=1; j<channels+1; j++) {
+			Stack.setChannel(j);
+			idx = find_brightest_slice_hstk();
+			Stack.setSlice(idx);
+			resetMinAndMax();
+		}
+		run("8-bit");
+		
+		//saves image
+		outPath = save_dir + "/" + keyword + "_s" + i + ".tif";
+		print(outPath);
+		saveAs("tiff", outPath);
 	
-	//saves image
-	outPath = save_dir + "/" + keyword + "_s" + i + ".tif";
-	print(outPath);
-	saveAs("tiff", outPath);
+	} else {
+		print("No data for position s"+i);	
+	}
+
 	run("Close All");
 	run("Collect Garbage");
 }

@@ -7,8 +7,8 @@ run("Close All");
 //select directory
 data_dir = getDirectory("Image directory containing files");
 dir_list = getFileList(data_dir);
-//key = "Trans.*tif"
-key = "GFP.*tif"
+key = "Trans.*tif"
+//key = "Caco.*tif"
 
 toggle = 1;
 
